@@ -13,35 +13,31 @@
     - apache2
     - php5.6-xml
     - php5.6-xmlrpc
-    - mysql-client
+    - mysql-server
+    - python-mysqldb
     - php-zip
     - php5.6-zip
-
-- unarchive:
-    src: html.tar.gz
-    dest: /var/www/
-
-- replace:
-    dest=/var/www/html/php/conecta.php
-    regexp='192.168.8.124'
-    replace='192.168.80.5'
-
-- replace:
-    dest=/var/www/html/php/conecta.php
-    regexp='dario'
-    replace='vagrant'
-
-- replace:
-    dest=/var/www/html/php/dump.php
-    regexp='192.168.8.124'
-    replace='192.168.80.5'
-
-- replace:
-    dest=/var/www/html/php/dump.php
-    regexp='dario'
-    replace='vagrant'
 
 - name: Restarting apache
   service:
     name: apache2
     state: restarted
+
+- copy:
+    src: pueblosmalaga.sql
+    dest: /tmp/pueblosmalaga.sql
+
+- name: Import .sql 
+  mysql_db:
+    state: import
+    name: dbmalaga
+    target: /tmp/pueblosmalaga.sql
+    
+- mysql_user:
+    name: vagrant
+    password: vagrant
+    host: '%' 
+    priv: '*.*:ALL'
+    state: present
+    
+    
