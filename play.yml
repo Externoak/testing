@@ -17,6 +17,7 @@
     - python-mysqldb
     - php-zip
     - php5.6-zip
+    - git
 
 - name: Restarting apache
   service:
