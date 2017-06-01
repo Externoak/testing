@@ -39,7 +39,7 @@
     state: import
     name: dbmalaga
     target: /tmp/pueblosmalaga.sql
-    when: db_created.changed
+  when: db_created.changed
     
 - mysql_user:
     name: vagrant
