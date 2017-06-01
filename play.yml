@@ -27,12 +27,19 @@
 - copy:
     src: pueblosmalaga.sql
     dest: /tmp/pueblosmalaga.sql
-
+    
+- name: Create DB (if necessary)
+  mysql_db:
+    name=dbmalaga
+    state=present
+  register: db_created
+  
 - name: Import .sql 
   mysql_db:
     state: import
     name: dbmalaga
     target: /tmp/pueblosmalaga.sql
+    when: db_created.changed
     
 - mysql_user:
     name: vagrant
