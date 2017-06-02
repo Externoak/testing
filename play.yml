@@ -47,6 +47,3 @@
     host: '%' 
     priv: '*.*:ALL'
     state: present
-    
-- debug:
-    msg: "Access on IP: {{ ansible_eth1.ipv4.address }}:80"
